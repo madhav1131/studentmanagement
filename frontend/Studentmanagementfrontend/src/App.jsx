@@ -27,8 +27,7 @@ function initials(name = '') {
   return name.split(' ').filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase() || '?'
 }
 
-async function request(path, options = {}) {
-  const API_URL = import.meta.env.VITE_API_URL || '';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 async function request(path, options = {}) {
   const response = await fetch(`${API_URL}/api/students${path}`, {
@@ -53,7 +52,6 @@ async function request(path, options = {}) {
   }
 
   return response.status === 204 ? null : response.json();
-}
 }
 
 function App() {
