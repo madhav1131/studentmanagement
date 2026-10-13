@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Academic Portal</p>
+          <h1>Student Management System</h1>
+        </div>
+        <div class="header-actions">
+          <button class="secondary-btn" id="exportCsvBtn" type="button">Export CSV</button>
+          <button class="primary-btn" id="newStudentBtn" type="button">Add Student</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="summary-grid" aria-label="Student summary cards">
+          <article class="summary-card accent-blue">
+            <span class="label">Total Students</span>
+            <strong id="totalStudents">0</strong>
+          </article>
+          <article class="summary-card accent-green">
+            <span class="label">Branches</span>
+            <strong id="totalBranches">0</strong>
+          </article>
+          <article class="summary-card accent-purple">
+            <span class="label">Search Result</span>
+            <strong id="searchCount">0</strong>
+          </article>
+        </section>
+
+        <section class="panel" id="studentFormPanel">
+          <div class="panel-heading">
+            <h2 id="formTitle">Add Student</h2>
+          </div>
+
+          <form id="studentForm" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Student Name</label>
+                <input id="name" name="name" type="text" maxlength="100" required />
+              </div>
+
+              <div class="field">
+                <label for="rollNumber">Roll Number</label>
+                <input id="rollNumber" name="rollNumber" type="text" maxlength="50" required />
+              </div>
+
+              <div class="field">
+                <label for="branch">Branch</label>
+                <input id="branch" name="branch" type="text" maxlength="80" required />
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" maxlength="150" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" maxlength="20" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-btn" type="submit" id="submitBtn">Save Student</button>
+              <button class="secondary-btn" type="button" id="cancelEditBtn" hidden>Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="toolbar">
+            <div class="search-box">
+              <label class="sr-only" for="searchInput">Search students</label>
+              <input id="searchInput" type="search" placeholder="Search by name, roll number, or email" />
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-box">
+                <label for="branchFilter">Filter by Branch</label>
+                <select id="branchFilter">
+                  <option value="all">All branches</option>
+                </select>
+              </div>
+
+              <div class="filter-box">
+                <label for="sortBy">Sort By</label>
+                <select id="sortBy">
+                  <option value="id">ID</option>
+                  <option value="name">Name</option>
+                  <option value="rollNumber">Roll Number</option>
+                  <option value="branch">Branch</option>
+                  <option value="email">Email</option>
+                  <option value="createdAt">Created At</option>
+                  <option value="updatedAt">Updated At</option>
+                </select>
+              </div>
+
+              <div class="filter-box">
+                <label for="sortDirection">Order</label>
+                <select id="sortDirection">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="loadingIndicator" class="loading" hidden>Loading students...</div>
+
+          <div class="table-wrapper">
+            <table aria-live="polite">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Roll No</th>
+                  <th>Branch</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Created</th>
+                  <th>Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody"></tbody>
+            </table>
+          </div>
+
+          <div id="emptyState" class="empty-state" hidden>
+            No student records found.
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
