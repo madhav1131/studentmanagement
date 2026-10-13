@@ -28,21 +28,32 @@ function initials(name = '') {
 }
 
 async function request(path, options = {}) {
-  const response = await fetch(`/api/students${path}`, {
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
+async function request(path, options = {}) {
+  const response = await fetch(`${API_URL}/api/students${path}`, {
     ...options,
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-  })
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
   if (!response.ok) {
-    let message = `Request failed (${response.status})`
+    let message = `Request failed (${response.status})`;
+
     try {
-      const body = await response.json()
-      message = body.message || body.error || message
+      const body = await response.json();
+      message = body.message || body.error || message;
     } catch {
       // Keep the HTTP status message when the response is not JSON.
     }
-    throw new Error(message)
+
+    throw new Error(message);
   }
-  return response.status === 204 ? null : response.json()
+
+  return response.status === 204 ? null : response.json();
+}
 }
 
 function App() {
